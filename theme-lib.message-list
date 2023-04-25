@@ -178,7 +178,7 @@
        <#assign msg_status_txt = "theme-lib.general.thread-floated" />
    </#if>
    <#if msg.conversation.solved>
-   <#-- I changed the name of the solved threads to solved-threads and since it was also used in the next line (163) I also updated the name there -->
+   <#-- I changed the name of the solved threads to solved-threads and since it was also used in the next line (183) I also updated the name there -->
        <#assign solved = "solved-threads" />
        <#assign msg_status_icon = "solved-threads" />
        <#assign msg_status_txt = "theme-lib.general.thread-solved" />
