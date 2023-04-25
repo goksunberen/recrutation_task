@@ -113,13 +113,30 @@
 }
 
 .benefits-content-list-element {
-    width: calc(100% / 6);
+    /* I decided to divide the width into three parts to show 3 elements in each row which makes two rows and three columns in this case.
+       Task 2 wasn't completely clear to me because I wasn't sure if I was supposed to just divide the elements into two rows and three columns or
+       create a responsive web design which divides the elements into two rows and three columns when the screen size is below 900px.
+       That's why I wanted to write code for both of them. The first case is line 120 and the responsive scenario is lines 128-139. */
+    width: calc(100% / 3);
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     padding: 20px 20px 30px 20px;
     min-width: min-content;
 }
+    
+/* The case of changing the row count depending on screen width
+@media screen and (max-width:900px){
+  .benefits-content-list-element {
+    width: calc(100% / 3);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 20px 20px 30px 20px;
+    min-width: min-content;
+  }
+}
+*/
 
 .benefits-content-list-icon {
     padding-bottom: 10px;
@@ -129,6 +146,11 @@
     height: 60px;
 }
 
+/* Code to make icons bigger on hover */
+.benefits-content-list-icon:hover{
+  transform: scale(1.25);
+}    
+    
 .benefits-content-list-description, .benefits-content-list-description-blue {
     font-style: normal;
     font-weight: 300;
@@ -218,6 +240,21 @@
    line-height: 30px;
    font-weight: 300;
    justify-content: center;
+}
+
+/* I designed the map button with dark violet background and white text colour */
+.map-content-button > button{
+  background-color: darkviolet;
+  color: white;
+  padding: 10px 20px;
+  border: 1px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+    
+/* I wanted to make the button seem more exciting so I made the colour darker on hover */
+.map-content-button > button:hover{
+  background-color:rgb(108, 0, 154);
 }
 
 /*Join page - Testimonials component*/
@@ -311,7 +348,8 @@
 
 #testimonials-carousel > .carousel-indicators > li {
     display: inline-block;
-    width: calc(100% / 4 - 50px);
+    /* I change the width because now we have 5 slides for carousel */
+    width: calc(100% / 5 - 50px);
     height: 0.6rem;
     margin: 20px;
     text-indent: -999px;
@@ -323,7 +361,8 @@
 
 #testimonials-carousel .carousel-indicators .active {
     display: inline-block;
-    width: calc(100% / 4 - 50px);
+    /* I change the width because now we have 5 slides for carousel */
+    width: calc(100% / 5 - 50px);
     height: 0.6rem;
     margin: 20px;
     text-indent: -999px;
@@ -823,6 +862,13 @@ span.lia-button-link-arrow.lia-button-link-arrow-black {
         <p><b>Hundreds</b><br> of companies</p>
       </div>
     </div>
+    
+/* Added new div for the button, added map icon, Map text and linked it to Google Maps which opens in a new tab when clicked on the button */
+     <div class = "map-content-button">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <button onclick="window.open('https://www.google.com/maps')"><i class="fa fa-map"></i><b> Map</b></button>
+    </div>
+    
   </div>
 </div>
 
@@ -840,6 +886,7 @@ span.lia-button-link-arrow.lia-button-link-arrow-black {
     <li data-target="#testimonials-carousel" data-slide-to="1"></li>
     <li data-target="#testimonials-carousel" data-slide-to="2"></li>
     <li data-target="#testimonials-carousel" data-slide-to="3"></li>
+    <li data-target="#testimonials-carousel" data-slide-to="4"></li>
   </ol>
 
   <div class="carousel-inner">
@@ -926,6 +973,28 @@ span.lia-button-link-arrow.lia-button-link-arrow-black {
         </div>
      </div>
     </div>
+    
+    /* Added new element to the carousel and used myself as the person */
+    <div class="item">
+      <div class="testimonials-quote-wrap">
+       <div class="testimonials-quote-element">
+         <div class="testimonials-quote">
+           <p>It's only been a few days since I joined the Dynatrace Community but I already feel like I found a place that I can improve myself, create unique ideas and be a part of an exciting journey with the team.</p>
+           <img class="testimonial-quote-mark-1" src="https://community.dynatrace.com/html/assets/quote_black.png">
+           <img class="testimonial-quote-mark-2" src="https://community.dynatrace.com/html/assets/quote_black.png">
+         </div>
+       </div>
+         <div class="testimonials-picture">
+           <div class="testimonials-picture-avatar">
+             <img src="https://i1.rgstatic.net/ii/profile.image/11431281083221441-1662481998175_Q512/Goksun-Usta.jpg"></img>
+           </div>
+           <div class="testimonials-picture-name">
+             <h2>Goksun Usta</h2>
+             <p>Intern</p>
+           </div>
+         </div>
+      </div>
+     </div>
 
   <a class="left carousel-control" href="#testimonials-carousel" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
