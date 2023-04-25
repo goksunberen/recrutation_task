@@ -7,6 +7,14 @@
 <#assign sorting = http.request.parameters.name.get("sort", "") />
  
 <#-- page size -->
+
+<#-- TASK 1: In the actual code block, we were getting number of messages per page from another source and if the user was registered, the user could
+             change the pageSize by their own input. Since we are supposed to have a fixed number of messages per page without using any other source in Task 1,
+             I assigned pageSize to 30 as it is seen at line 15. The actual code block from 18-24 would be deleted to complete this task. -->
+
+<#assign pageSize = 30 />
+
+<#--
 <#assign pageSize = coreNode.settings.name.get("layout.messages_per_page_linear", "10")?number />
 <#if user.registered>
    <#assign pageSizeUser = settings.name.get("layout.messages_per_page_linear") />
@@ -14,6 +22,7 @@
        <#assign pageSize = pageSizeUser />
    </#if>
 </#if>
+-->
  
 <#if webuisupport.path.parameters.name.get("label-name")??>
    <#assign label = webuisupport.path.parameters.name.get("label-name").getText() />
@@ -44,6 +53,22 @@
    <#case "replies">
        <#assign orderClause = "ORDER BY replies.count(*) DESC " />
    <#break>
+   <#-- Sorting from newest post to oldest post -->
+   <#case "recent">
+      <#assign orderClause = "ORDER BY post_time DESC" />
+   <#break>
+   <#-- Sorting from lowest kudos to highest kudos -->
+   <#case "low-kudos">
+      <#assign orderClause = "ORDER BY kudos.sum(weight) ASC " />
+   <#break>
+   <#-- Sorting of questions with no answers-replies -->
+   <#case "unanswered">
+      <#assign orderClause = "WHERE reply.count(*) = 0 " />
+   <#break>
+   <#-- Sorting of questions with no solution -->
+   <#case "no-solution">
+      <#assign orderClause = "WHERE conversation.solved = false " />
+   <#break>
    <#default>
        <#assign orderClause = "ORDER BY conversation.last_post_time DESC " />
    <#break>
@@ -72,10 +97,14 @@
        <header>
            <div class="custom-message-list-header-left">
                <select id="community-activity-sorted-by">
+                   <#-- Added low-kudos, unanswered and no-solution since recent was already added -->
                    <option value="recent" <#if sorting == 'recent'>selected</#if>>${text.format("theme-lib.community-activity.recent")}</option>
                    <option value="views" <#if sorting == 'views'>selected</#if>>${text.format("theme-lib.community-activity.views")}</option>
                    <option value="replies" <#if sorting == 'replies'>selected</#if>>${text.format("theme-lib.community-activity.replies")}</option>
                    <option value="kudos" <#if sorting == 'kudos'>selected</#if>>${text.format("theme-lib.community-activity.kudos")}</option>
+                   <option value="low-kudos" <#if sorting == 'low-kudos'>selected</#if>>${text.format("theme-lib.community-activity.low-kudos")}</option>
+                   <option value="unanswered" <#if sorting == 'unanswered'>selected</#if>>${text.format("theme-lib.community-activity.unanswered")}</option>
+                   <option value="no-solution" <#if sorting == 'no-solution'>selected</#if>>${text.format("theme-lib.community-activity.no-solution")}</option>
                </select>
                <#if page.interactionStyle=="idea">
                  <@component id="custom.idea.status.label" />
@@ -149,8 +178,9 @@
        <#assign msg_status_txt = "theme-lib.general.thread-floated" />
    </#if>
    <#if msg.conversation.solved>
-       <#assign solved = "custom-thread-solved" />
-       <#assign msg_status_icon = "custom-thread-solved" />
+   <#-- I changed the name of the solved threads to solved-threads and since it was also used in the next line (163) I also updated the name there -->
+       <#assign solved = "solved-threads" />
+       <#assign msg_status_icon = "solved-threads" />
        <#assign msg_status_txt = "theme-lib.general.thread-solved" />
    </#if>
    <#if !msg.user_context.read>
